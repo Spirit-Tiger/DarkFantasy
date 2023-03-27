@@ -10,6 +10,8 @@ public class PlayerData : ScriptableObject
 
     [Header("Jump State")]
     public float jumpSpeed = 0.2f;
+    public int amountOfJumps = 2;
+    public float coyoteTime = 0.1f;
 
 
     [Header("Check Variables")]
