@@ -10,6 +10,8 @@ public class PlayerInputHandler : MonoBehaviour
     public int NormInputX { get; private set; }
     public int NormInputY { get; private set; }
     public bool JumpInput { get; private set; }
+    public bool GrabInput { get; private set; }
+    public bool ShootInput;
 
     [SerializeField]
     private float jumpBufferTime = 0.2f;
@@ -47,9 +49,25 @@ public class PlayerInputHandler : MonoBehaviour
 
     public void UseJupmInput() => JumpInput = false;
 
+    public void OnGrabInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            GrabInput = true;
+        }
+
+        if (context.canceled)
+        {
+            GrabInput = false;
+        }
+    }
+
     public void OnShootInput(InputAction.CallbackContext context)
     {
-       // Debug.Log("Shoot");
+       if(context.started)
+        {
+            ShootInput = true;
+        }
     }
     public void OnAbilityActivateInput(InputAction.CallbackContext context)
     {

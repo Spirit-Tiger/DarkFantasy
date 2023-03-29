@@ -18,6 +18,8 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.BottomPartAnim.Play("Run");
+        player.TopPartAnim.Play("Run");
     }
 
     public override void Exit()
@@ -29,7 +31,7 @@ public class PlayerMoveState : PlayerGroundedState
     {
         base.LogicUpdate();
         Move();
-        if (xInput == 0)
+        if (xInput == 0 && !isExitingState)
         {
             stateMachine.ChangeState(player.IdleState);
         }

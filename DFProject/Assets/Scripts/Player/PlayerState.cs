@@ -9,6 +9,7 @@ public abstract class PlayerState
     protected PlayerData playerData;
 
     protected bool isAnimFinished;
+    protected bool isExitingState;
     protected float startTime;
 
     private string _animBoolName;
@@ -27,16 +28,21 @@ public abstract class PlayerState
         startTime = Time.time;
         Debug.Log(_animBoolName);
         isAnimFinished = false;
+        isExitingState = false;
     }
 
     public virtual void Exit()
     {
-
+        isExitingState = true;
     }
 
     public virtual void LogicUpdate()
     {
         DoChecks();
+        if (player.PlayerInput.ShootInput)
+        {
+            Shoot();
+        }
     }
     public virtual void PhysicsUpdate()
     {
@@ -53,4 +59,10 @@ public abstract class PlayerState
     }
 
     public virtual void AnimationFinishTrigger() => isAnimFinished = true;
+    public virtual void Shoot()
+    {
+        Debug.Log("Shoot");
+        player.AnimTriggers.SwichToShootAnimation();
+        player.ShootAnim.Play("ShootAnim", 0, 0.01f);
+    }
 }

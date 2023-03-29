@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class PlayerInAirState : PlayerAbilityState
 {
-    private bool isGrounded;
     private int xInput;
+    private bool isGrounded;
+    private bool isTouchingWall;
     private bool jumpInput;
     public bool isCoyoteTimeActive;
+    private bool grabInput;
+    private bool isTouchingWallBack;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -16,8 +19,8 @@ public class PlayerInAirState : PlayerAbilityState
     {
         base.DoChecks();
         isGrounded = player.CheckIfGrounded();
-
-     
+        isTouchingWall = player.CheckIfTouchingWall();
+        isTouchingWallBack = player.CheckIfTouchingWallBack();
     }
 
     public override void Enter()
@@ -36,14 +39,29 @@ public class PlayerInAirState : PlayerAbilityState
         CheckCoyoteTime();
         xInput = player.PlayerInput.NormInputX;
         jumpInput = player.PlayerInput.JumpInput;
+        grabInput = player.PlayerInput.GrabInput;
 
         if (isGrounded && player.RB.velocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
         }
+        else if (jumpInput && (isTouchingWall || isTouchingWallBack))
+        {
+            isTouchingWall = player.CheckIfTouchingWall();
+            player.WallJumpState.DetermineWallJumpDirection(isTouchingWall);
+            stateMachine.ChangeState(player.WallJumpState);
+        }
         else if (jumpInput && player.JumpState.CanJump())
         {
             stateMachine.ChangeState(player.JumpState);
+        }
+        else if (isTouchingWall && grabInput)
+        {
+            stateMachine.ChangeState(player.WallGrabState);
+        }
+        else if (isTouchingWall && xInput == player.FaceingDirection && player.RB.velocity.y <= 0)
+        {
+            stateMachine.ChangeState(player.WallSlideState);
         }
         else if (Mathf.Abs(xInput) > 0f)
         {

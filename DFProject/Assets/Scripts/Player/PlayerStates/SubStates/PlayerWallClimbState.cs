@@ -8,11 +8,6 @@ public class PlayerWallClimbState : PlayerTouchingWallState
     {
     }
 
-    public override void DoChecks()
-    {
-        base.DoChecks();
-    }
-
     public override void Enter()
     {
         base.Enter();
@@ -26,10 +21,16 @@ public class PlayerWallClimbState : PlayerTouchingWallState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        if (!isExitingState)
+        {
+            player.RB.velocity = Vector2.up * playerData.wallClimbVelocity;
+
+            if (yInput != 1)
+            {
+                stateMachine.ChangeState(player.WallGrabState);
+            }
+        }
     }
 
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
 }

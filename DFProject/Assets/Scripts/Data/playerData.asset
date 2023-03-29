@@ -16,4 +16,10 @@ MonoBehaviour:
   jumpSpeed: 40
   amountOfJumps: 2
   coyoteTime: 0.14
+  wallSlideVelocity: 3
+  wallClimbVelocity: 3
+  wallJumpVelocity: 30
+  wallJumpTime: 0.3
+  wallJumpAngle: {x: 1, y: 2}
   groundCheckRadius: 0.3
+  wallCheckDistance: 0.6

@@ -19,6 +19,8 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.Enter();
         player.RB.velocity = Vector2.zero;
+        player.BottomPartAnim.Play("Idle");
+        player.TopPartAnim.Play("Idle");
     }
 
     public override void Exit()
@@ -29,7 +31,7 @@ public class PlayerIdleState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(xInput != 0)
+        if (xInput != 0 && !isExitingState)
         {
             stateMachine.ChangeState(player.MoveState);
         }
