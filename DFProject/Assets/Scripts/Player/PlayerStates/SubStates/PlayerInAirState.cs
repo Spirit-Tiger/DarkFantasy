@@ -11,6 +11,7 @@ public class PlayerInAirState : PlayerAbilityState
     public bool isCoyoteTimeActive;
     private bool grabInput;
     private bool isTouchingWallBack;
+    private bool crouchInput;
     public PlayerInAirState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -40,7 +41,7 @@ public class PlayerInAirState : PlayerAbilityState
         xInput = player.PlayerInput.NormInputX;
         jumpInput = player.PlayerInput.JumpInput;
         grabInput = player.PlayerInput.GrabInput;
-
+        crouchInput = player.PlayerInput.CrouchInput;
         if (isGrounded && player.RB.velocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.LandState);
@@ -68,8 +69,22 @@ public class PlayerInAirState : PlayerAbilityState
             Move();
         }
 
-    }
+        if (lookUpInput)
+        {
+            player.TopPartAnim.Play("LookUp");
+        }
 
+        if (!lookUpInput)
+        {
+            player.TopPartAnim.Play("Jump");
+        }
+
+        /*  if (crouchInput && isGrounded)
+          {
+              stateMachine.ChangeState(player.CrouchIdleState);
+          }*/
+    }
+   
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();

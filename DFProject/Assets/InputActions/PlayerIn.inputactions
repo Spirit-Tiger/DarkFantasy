@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "CrouchMove",
+                    "type": "Button",
+                    "id": "90424b94-afcd-4cdc-801f-aca68dea4242",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Shoot",
                     "type": "Button",
                     "id": "e394df08-39a6-4dd0-98a1-23c2cf9a04f5",
@@ -49,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LookUp",
+                    "type": "Button",
+                    "id": "08ff002d-6211-42b8-ba1e-82785a407d7d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -66,7 +84,7 @@
                 {
                     "name": "WASD",
                     "id": "384f9010-c499-4276-88fd-5fde0e032808",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=1)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -76,7 +94,7 @@
                 },
                 {
                     "name": "Up",
-                    "id": "dd6f5ff4-cb3f-49a0-86b8-73caa57fc8b0",
+                    "id": "dbbbf06a-8595-4c51-8eee-64db350e786b",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -86,8 +104,8 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Down",
-                    "id": "8b4f30f4-b148-4546-af59-0c279ca7b268",
+                    "name": "down",
+                    "id": "074fef34-dc46-4e89-b564-f18933565335",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -98,7 +116,7 @@
                 },
                 {
                     "name": "Left",
-                    "id": "dbbbf06a-8595-4c51-8eee-64db350e786b",
+                    "id": "19380957-b18e-4359-adb0-26cdb56dc9d0",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -109,7 +127,7 @@
                 },
                 {
                     "name": "Right",
-                    "id": "ed2543b5-6aed-4589-a13c-cf80abdccdce",
+                    "id": "9fd83c49-cf01-4b84-8c8e-667e26f6e1ae",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -135,7 +153,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -146,7 +164,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -157,7 +175,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -198,11 +216,55 @@
                 {
                     "name": "",
                     "id": "854b08ba-d83d-4abb-b52f-0b8b70c0fae4",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Grab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62ee246e-5046-4d87-9b46-78613eaa0b77",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "CrouchMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a26c6dfd-e64a-42af-b694-576144b9be50",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "CrouchMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ae24231-ab82-4292-8d0b-ffe7ab2714fc",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "LookUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e450563e-dc5c-41b2-a50e-bbbf57386836",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "LookUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

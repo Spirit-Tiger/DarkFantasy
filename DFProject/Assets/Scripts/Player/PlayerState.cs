@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class PlayerState
@@ -11,6 +13,7 @@ public abstract class PlayerState
     protected bool isAnimFinished;
     protected bool isExitingState;
     protected float startTime;
+    private bool isGrounded;
 
     private string _animBoolName;
 
@@ -46,11 +49,11 @@ public abstract class PlayerState
     }
     public virtual void PhysicsUpdate()
     {
-       
+
     }
     public virtual void DoChecks()
     {
-
+        isGrounded = player.CheckIfGrounded();
     }
 
     public virtual void AnimationTrigger()
@@ -63,6 +66,30 @@ public abstract class PlayerState
     {
         Debug.Log("Shoot");
         player.AnimTriggers.SwichToShootAnimation();
-        player.ShootAnim.Play("ShootAnim", 0, 0.01f);
+        if (player.PlayerInput.LookUpInput)
+        {
+            if (player.PlayerInput.CrouchInput && isGrounded)
+            {
+                Debug.Log("ShootCrouchUp");
+                player.ShootAnim.Play("ShootCrouchUp", 0, 0.01f);
+            }
+            else
+            {
+                Debug.Log("ShootUp");
+                player.ShootAnim.Play("ShootUp", 0, 0.01f);
+            }
+        }
+        else if(!player.PlayerInput.LookUpInput )
+        {
+            if (player.PlayerInput.CrouchInput && isGrounded)
+            {
+                player.ShootAnim.Play("ShootCrouch", 0, 0.01f);
+            }
+            else
+            {
+                Debug.Log("ShootNormal");
+                player.ShootAnim.Play("ShootAnim", 0, 0.01f);
+            }
+        }
     }
 }

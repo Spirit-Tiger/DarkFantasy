@@ -12,6 +12,8 @@ public class PlayerInputHandler : MonoBehaviour
     public bool JumpInput { get; private set; }
     public bool GrabInput { get; private set; }
     public bool ShootInput;
+    public bool CrouchInput { get; private set; }
+    public bool LookUpInput { get; private set; }
 
     [SerializeField]
     private float jumpBufferTime = 0.2f;
@@ -62,11 +64,36 @@ public class PlayerInputHandler : MonoBehaviour
         }
     }
 
+    public void OnCrouchInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            CrouchInput = true;
+
+        }
+        if (context.canceled)
+        {
+            CrouchInput = false;
+        }
+    }
+
     public void OnShootInput(InputAction.CallbackContext context)
     {
-       if(context.started)
+        if (context.started)
         {
             ShootInput = true;
+        }
+    }
+
+    public void OnLookUpInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            LookUpInput = true;
+        }
+        if (context.canceled)
+        {
+            LookUpInput = false;
         }
     }
     public void OnAbilityActivateInput(InputAction.CallbackContext context)

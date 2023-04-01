@@ -30,10 +30,19 @@ public class PlayerMoveState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        Move();
+        Move(playerData.moveSpeed);
         if (xInput == 0 && !isExitingState)
         {
             stateMachine.ChangeState(player.IdleState);
+        }
+        else if(xInput != 0 && crouchInput)
+        {
+            stateMachine.ChangeState(player.CrouchMoveState);
+        }
+
+        if (lookUpInput)
+        {
+            stateMachine.ChangeState(player.MoveUpState);
         }
     }
 
@@ -42,9 +51,5 @@ public class PlayerMoveState : PlayerGroundedState
         base.PhysicsUpdate();
     }
 
-    private void Move()
-    {
-        player.RB.velocity = new Vector2(1f * playerData.moveSpeed * xInput, player.RB.velocity.y);
-        player.CheckForFlip(xInput);
-    }
+
 }

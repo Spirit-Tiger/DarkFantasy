@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerJumpState : PlayerAbilityState
 {
-    private int amountOfJumpsLeft;
+    public int amountOfJumpsLeft;
     public int AmountOfJumpsLeft { get => amountOfJumpsLeft; private set { } }
 
     public PlayerJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -20,6 +20,8 @@ public class PlayerJumpState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
+        player.TopPartAnim.Play("Jump");
+        player.BottomPartAnim.Play("Jump");
         player.RB.velocity = new Vector2(player.RB.velocity.x, 0f);
         player.RB.AddForce(Vector2.up * playerData.jumpSpeed, ForceMode2D.Impulse);
         isAbilityDone = true;

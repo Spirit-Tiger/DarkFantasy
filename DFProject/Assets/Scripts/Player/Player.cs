@@ -31,14 +31,21 @@ public class Player : MonoBehaviour
     public PlayerShootState ShootState { get; private set; }
 
     public PlayerIdleState IdleState { get; private set; }
+    public PlayerIdleUpState IdleUpState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
+    public PlayerMoveUpState MoveUpState { get; private set; }
     public PlayerLandState LandState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
+    public PlayerJumpUpState JumpUpState { get; private set; }
     public PlayerInAirState InAirState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallGrabState WallGrabState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
     public PlayerWallJumpState WallJumpState { get; private set; }
+    public PlayerCrouchIdleState CrouchIdleState { get; private set; }
+    public PlayerCrouchIdleUpState CrouchIdleUpState { get; private set; }
+    public PlayerCrouchMoveState CrouchMoveState { get; private set; }
+    public PlayerCrouchMoveUpState CrouchMoveUpState { get; private set; }
     private void Awake()
     {
         StateMachine = new PlayerStateMachine();
@@ -49,14 +56,21 @@ public class Player : MonoBehaviour
         ShootState = new PlayerShootState(this, StateMachine, playerData, "shoot");
 
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
+        IdleUpState = new PlayerIdleUpState(this, StateMachine, playerData, "idleUp");
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
+        MoveUpState = new PlayerMoveUpState(this, StateMachine, playerData, "moveUp");
         LandState = new PlayerLandState(this, StateMachine, playerData, "land");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "jupm");
+        JumpUpState = new PlayerJumpUpState(this, StateMachine, playerData, "jupmUp");
         InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
         WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
         WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
         WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "wallJump");
+        CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
+        CrouchIdleUpState = new PlayerCrouchIdleUpState(this, StateMachine, playerData, "crouchUpIdle");
+        CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
+        CrouchMoveUpState = new PlayerCrouchMoveUpState(this, StateMachine, playerData, "crouchUpMove");
     }
 
     private void Start()

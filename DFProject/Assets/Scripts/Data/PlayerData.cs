@@ -8,6 +8,9 @@ public class PlayerData : ScriptableObject
     [Header("Move State")]
     public float moveSpeed = 10f;
 
+    [Header("Crouck Move State")]
+    public float crouckMoveSpeed = 5f;
+
     [Header("Jump State")]
     public float jumpSpeed = 0.2f;
     public int amountOfJumps = 2;
