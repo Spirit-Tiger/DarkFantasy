@@ -6,10 +6,16 @@ using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     public PlayerStateMachine StateMachine { get; private set; }
+
     public Animator BottomPartAnim;
     public Animator TopPartAnim;
-
     public Animator ShootAnim;
+
+    public Transform TopPartPos;
+    public Transform ShootPartPos;
+
+    public BulletsSpawner Spawner;
+
     public ShootAnimationTriggers AnimTriggers;
 
     [SerializeField]
@@ -28,16 +34,16 @@ public class Player : MonoBehaviour
 
     public int FaceingDirection { get; private set; }
 
-    public PlayerShootState ShootState { get; private set; }
-
     public PlayerIdleState IdleState { get; private set; }
     public PlayerIdleUpState IdleUpState { get; private set; }
     public PlayerMoveState MoveState { get; private set; }
     public PlayerMoveUpState MoveUpState { get; private set; }
-    public PlayerLandState LandState { get; private set; }
+    public PlayerJumpDownState JumpDownState { get; private set; }
     public PlayerJumpState JumpState { get; private set; }
     public PlayerJumpUpState JumpUpState { get; private set; }
-    public PlayerInAirState InAirState { get; private set; }
+    public PlayerFallingDownState FallingDownState { get; private set; }
+    public PlayerFallingState FallingState { get; private set; }
+    public PlayerFallingUpState FallingUpState { get; private set; }
     public PlayerWallSlideState WallSlideState { get; private set; }
     public PlayerWallGrabState WallGrabState { get; private set; }
     public PlayerWallClimbState WallClimbState { get; private set; }
@@ -53,22 +59,28 @@ public class Player : MonoBehaviour
         PlayerInput = GetComponent<PlayerInputHandler>();
         RB = GetComponent<Rigidbody2D>();
 
-        ShootState = new PlayerShootState(this, StateMachine, playerData, "shoot");
-
         IdleState = new PlayerIdleState(this, StateMachine, playerData, "idle");
         IdleUpState = new PlayerIdleUpState(this, StateMachine, playerData, "idleUp");
+
         MoveState = new PlayerMoveState(this, StateMachine, playerData, "move");
         MoveUpState = new PlayerMoveUpState(this, StateMachine, playerData, "moveUp");
-        LandState = new PlayerLandState(this, StateMachine, playerData, "land");
+
+        JumpDownState = new PlayerJumpDownState(this, StateMachine, playerData, "jupmDown");
         JumpState = new PlayerJumpState(this, StateMachine, playerData, "jupm");
         JumpUpState = new PlayerJumpUpState(this, StateMachine, playerData, "jupmUp");
-        InAirState = new PlayerInAirState(this, StateMachine, playerData, "inAir");
+
+        FallingDownState = new PlayerFallingDownState(this, StateMachine, playerData, "fallingDown");
+        FallingState = new PlayerFallingState(this, StateMachine, playerData, "falling");
+        FallingUpState = new PlayerFallingUpState(this, StateMachine, playerData, "fallingUp");
+
         WallSlideState = new PlayerWallSlideState(this, StateMachine, playerData, "wallSlide");
         WallGrabState = new PlayerWallGrabState(this, StateMachine, playerData, "wallGrab");
         WallClimbState = new PlayerWallClimbState(this, StateMachine, playerData, "wallClimb");
         WallJumpState = new PlayerWallJumpState(this, StateMachine, playerData, "wallJump");
+
         CrouchIdleState = new PlayerCrouchIdleState(this, StateMachine, playerData, "crouchIdle");
         CrouchIdleUpState = new PlayerCrouchIdleUpState(this, StateMachine, playerData, "crouchUpIdle");
+
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
         CrouchMoveUpState = new PlayerCrouchMoveUpState(this, StateMachine, playerData, "crouchUpMove");
     }
@@ -82,10 +94,6 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.CurrentState.LogicUpdate();
-    }
-    private void FixedUpdate()
-    {
-        StateMachine.CurrentState.PhysicsUpdate();
     }
 
     public void CheckForFlip(int xInput)
@@ -111,20 +119,21 @@ public class Player : MonoBehaviour
         return Physics2D.Raycast(wallCheck.position, Vector2.right * -FaceingDirection, playerData.wallCheckDistance, groundLayer);
     }
 
-    private void AnimationTrigger() => StateMachine.CurrentState.AnimationTrigger();
-
-    private void AnimationFinishTrigger() => StateMachine.CurrentState.AnimationFinishTrigger();
-
     public void SetVelocity(float velocity, Vector2 angle, int direction)
     {
         angle.Normalize();
         RB.velocity = new Vector2(angle.x * velocity * direction, angle.y * velocity);
-        Debug.Log("DIR2" + direction);
     }
 
     private void Flip()
     {
         FaceingDirection *= -1;
         transform.Rotate(0.0f, 180.0f, 0.0f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(groundCheckPos.position, playerData.groundCheckRadius);
     }
 }

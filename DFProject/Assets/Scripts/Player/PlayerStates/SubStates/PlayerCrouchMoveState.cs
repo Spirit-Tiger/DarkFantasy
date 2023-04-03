@@ -16,8 +16,10 @@ public class PlayerCrouchMoveState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        player.BottomPartAnim.Play("CrouchRun");
+
         player.TopPartAnim.Play("CrouchRun");
+        player.BottomPartAnim.Play("CrouchRun");
+
     }
 
     public override void Exit()
@@ -28,21 +30,27 @@ public class PlayerCrouchMoveState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        Move(playerData.crouckMoveSpeed);
-        if (!crouchInput)
+
+        MoveX(playerData.crouckMoveSpeed);
+
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.MoveState);
-        }
-        else if (xInput == 0 && crouchInput)
-        {
-            stateMachine.ChangeState(player.CrouchIdleState);
-        }
-        else if (xInput == 0 && !crouchInput)
-        {
-            stateMachine.ChangeState(player.IdleState);
-        }else if (lookUpInput)
-        {
-            stateMachine.ChangeState(player.CrouchMoveUpState);
+            if (!DownInput)
+            {
+                stateMachine.ChangeState(player.MoveState);
+            }
+            else if (xInput == 0 && DownInput)
+            {
+                stateMachine.ChangeState(player.CrouchIdleState);
+            }
+            else if (xInput == 0 && !DownInput)
+            {
+                stateMachine.ChangeState(player.IdleState);
+            }
+            else if (LookUpInput)
+            {
+                stateMachine.ChangeState(player.CrouchMoveUpState);
+            }
         }
     }
 }

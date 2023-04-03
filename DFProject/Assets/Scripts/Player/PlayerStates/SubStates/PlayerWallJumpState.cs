@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerWallJumpState : PlayerAbilityState
+public class PlayerWallJumpState : PlayerAirState
 {
     private int wallJumpDirection;
     public PlayerWallJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
@@ -12,12 +12,13 @@ public class PlayerWallJumpState : PlayerAbilityState
     public override void Enter()
     {
         base.Enter();
+
+        CanMove = false;
         player.PlayerInput.UseJupmInput();
         player.JumpState.ResetAmountOfJumps();
         player.SetVelocity(playerData.wallJumpVelocity, playerData.wallJumpAngle, wallJumpDirection);
         player.CheckForFlip(wallJumpDirection);
         player.JumpState.DecreseAmountOfJumpsLeft();
-        Debug.Log("DIR" + wallJumpDirection);
     }
 
     public override void LogicUpdate()
@@ -26,7 +27,7 @@ public class PlayerWallJumpState : PlayerAbilityState
 
         if(Time.time > startTime + playerData.wallJumpTime ) 
         {
-            isAbilityDone = true;
+            CanMove = true;
         }
     }
 

@@ -16,6 +16,8 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+
+        player.RB.velocity = new Vector2(0f, player.RB.velocity.y);
         player.BottomPartAnim.Play("CrouchIdle");
         player.TopPartAnim.Play("CrouchIdle");
     }
@@ -28,16 +30,22 @@ public class PlayerCrouchIdleState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (!crouchInput)
+
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.IdleState);
-        }else if (crouchInput && lookUpInput)
-        {
-            stateMachine.ChangeState(player.CrouchIdleUpState);
+            if (!DownInput)
+            {
+                stateMachine.ChangeState(player.IdleState);
+            }
+            else if (DownInput && LookUpInput)
+            {
+                stateMachine.ChangeState(player.CrouchIdleUpState);
+            }
+            else if (DownInput && xInput != 0)
+            {
+                stateMachine.ChangeState(player.CrouchMoveState);
+            }
         }
-        else if(crouchInput && xInput != 0)
-        {
-            stateMachine.ChangeState(player.CrouchMoveState);
-        }
+
     }
 }

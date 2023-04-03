@@ -11,6 +11,7 @@ public class PlayerIdleUpState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+        player.RB.velocity = Vector2.zero;
         player.TopPartAnim.Play("LookUp");
         player.BottomPartAnim.Play("Idle");
     }
@@ -23,19 +24,23 @@ public class PlayerIdleUpState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if (!lookUpInput)
-        {
-            stateMachine.ChangeState(player.IdleState);
-        }
 
-        if (xInput != 0 && !isExitingState && lookUpInput)
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.MoveUpState);
-        }
+            if (!LookUpInput)
+            {
+                stateMachine.ChangeState(player.IdleState);
+            }
 
-        if (crouchInput && lookUpInput)
-        {
-            stateMachine.ChangeState(player.CrouchIdleUpState);
+            if (xInput != 0 && !isExitingState && LookUpInput)
+            {
+                stateMachine.ChangeState(player.MoveUpState);
+            }
+
+            if (DownInput && LookUpInput)
+            {
+                stateMachine.ChangeState(player.CrouchIdleUpState);
+            }
         }
     }
 }

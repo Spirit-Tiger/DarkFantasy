@@ -4,13 +4,11 @@ using UnityEngine;
 
 public abstract class PlayerGroundedState : PlayerState
 {
-    protected int xInput;
-    protected bool JumpInput;
     private bool isGrounded;
     private bool isTouchingWall;
     private bool grabInput;
-    protected bool crouchInput;
-    protected bool lookUpInput;
+
+
     public PlayerGroundedState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
         : base(player, stateMachine, playerData, animBoolName)
     {
@@ -22,13 +20,14 @@ public abstract class PlayerGroundedState : PlayerState
         base.DoChecks();
         isGrounded = player.CheckIfGrounded();
         isTouchingWall = player.CheckIfTouchingWall();
+
     }
 
     public override void Enter()
     {
         base.Enter();
-
         player.JumpState.ResetAmountOfJumps();
+        InAir = false;
     }
 
     public override void Exit()
@@ -39,41 +38,41 @@ public abstract class PlayerGroundedState : PlayerState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        xInput = player.PlayerInput.NormInputX;
-        JumpInput = player.PlayerInput.JumpInput;
+  
         grabInput = player.PlayerInput.GrabInput;
-        crouchInput = player.PlayerInput.CrouchInput;
-        lookUpInput = player.PlayerInput.LookUpInput;
 
         if (JumpInput && player.JumpState.CanJump())
         {
-            if (lookUpInput)
+            if (LookUpInput)
             {
                 stateMachine.ChangeState(player.JumpUpState);
                 return;
             }
-                stateMachine.ChangeState(player.JumpState);
+            else if (DownInput)
+            {
+                stateMachine.ChangeState(player.JumpDownState);
+                return;
+
+            }
+            stateMachine.ChangeState(player.JumpState);
         }
-        else if (!isGrounded)
+        else if (!isGrounded && player.RB.velocity.y < 0.01f)
         {
-            player.InAirState.ActivateCoyoteTime();
-            stateMachine.ChangeState(player.InAirState);
+            if (LookUpInput)
+            {
+                stateMachine.ChangeState(player.FallingUpState);
+                return;
+            }
+            else if (DownInput)
+            {
+                stateMachine.ChangeState(player.FallingDownState);
+                return;
+            }
+            stateMachine.ChangeState(player.FallingState);
         }
-        else if(isTouchingWall && grabInput)
+        else if (isTouchingWall && grabInput)
         {
             stateMachine.ChangeState(player.WallGrabState);
         }
-
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
-    public void Move(float speed)
-    {
-        player.RB.velocity = new Vector2(1f * speed * xInput, player.RB.velocity.y);
-        player.CheckForFlip(xInput);
     }
 }

@@ -18,9 +18,11 @@ public class PlayerIdleState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+
         player.RB.velocity = Vector2.zero;
-        player.BottomPartAnim.Play("Idle");
         player.TopPartAnim.Play("Idle");
+        player.BottomPartAnim.Play("Idle");
+
     }
 
     public override void Exit()
@@ -32,25 +34,22 @@ public class PlayerIdleState : PlayerGroundedState
     {
         base.LogicUpdate();
 
-        if (xInput != 0 && !isExitingState)
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.MoveState);
+            if (xInput != 0)
+            {
+                stateMachine.ChangeState(player.MoveState);
+            }
+
+            if (DownInput)
+            {
+                stateMachine.ChangeState(player.CrouchIdleState);
+            }
+
+            if (LookUpInput)
+            {
+                stateMachine.ChangeState(player.IdleUpState);
+            }
         }
-
-        if (crouchInput)
-        {
-            stateMachine.ChangeState(player.CrouchIdleState);
-        }
-
-        if (lookUpInput)
-        {
-            stateMachine.ChangeState(player.IdleUpState);
-        }
-
-    }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
     }
 }

@@ -16,14 +16,14 @@ public class PlayerLandState : PlayerGroundedState
         {
             if (xInput != 0)
             {
-                if (lookUpInput)
+                if (LookUpInput)
                 {
                     stateMachine.ChangeState(player.MoveUpState);
                     return;
                 }
                 stateMachine.ChangeState(player.MoveState);
             }
-            else if(lookUpInput)
+            else if(LookUpInput)
             {
                     stateMachine.ChangeState(player.IdleUpState);
           

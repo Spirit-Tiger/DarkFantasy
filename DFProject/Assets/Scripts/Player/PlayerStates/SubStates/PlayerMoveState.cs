@@ -18,8 +18,10 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
-        player.BottomPartAnim.Play("Run");
+
         player.TopPartAnim.Play("Run");
+        player.BottomPartAnim.Play("Run");
+
     }
 
     public override void Exit()
@@ -30,26 +32,24 @@ public class PlayerMoveState : PlayerGroundedState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        Move(playerData.moveSpeed);
-        if (xInput == 0 && !isExitingState)
-        {
-            stateMachine.ChangeState(player.IdleState);
-        }
-        else if(xInput != 0 && crouchInput)
-        {
-            stateMachine.ChangeState(player.CrouchMoveState);
-        }
 
-        if (lookUpInput)
+        MoveX(playerData.moveSpeed);
+
+        if (!isExitingState)
         {
-            stateMachine.ChangeState(player.MoveUpState);
+            if (xInput == 0)
+            {
+                stateMachine.ChangeState(player.IdleState);
+            }
+            else if (xInput != 0 && DownInput)
+            {
+                stateMachine.ChangeState(player.CrouchMoveState);
+            }
+
+            if (LookUpInput)
+            {
+                stateMachine.ChangeState(player.MoveUpState);
+            }
         }
     }
-
-    public override void PhysicsUpdate()
-    {
-        base.PhysicsUpdate();
-    }
-
-
 }
