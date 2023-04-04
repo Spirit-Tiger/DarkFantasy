@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 108005424}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: WallCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 157330470}
   - component: {fileID: 157330469}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 229438105}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4235,6 +4235,7 @@ MonoBehaviour:
   ShootAnim: {fileID: 1507575266}
   TopPartPos: {fileID: 1113364667}
   ShootPartPos: {fileID: 1507575265}
+  ShootingPoint: {fileID: 1916616636}
   Spawner: {fileID: 1916616637}
   AnimTriggers: {fileID: 1507575268}
   groundCheckPos: {fileID: 229438105}
@@ -14323,7 +14324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bulletPrefab: {fileID: 1406649287, guid: 4cd4070c01cbc7841b6d93db43be487d, type: 3}
   _player: {fileID: 634657075}
-  _bulletSpeed: 20
+  _bulletSpeed: 40
 --- !u!1 &1930558486
 GameObject:
   m_ObjectHideFlags: 0

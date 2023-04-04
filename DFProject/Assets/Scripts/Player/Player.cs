@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     public Transform TopPartPos;
     public Transform ShootPartPos;
+    public Transform ShootingPoint;
 
     public BulletsSpawner Spawner;
 

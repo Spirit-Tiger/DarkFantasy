@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
-using UnityEngine.Windows;
 
 public abstract class PlayerState
 {
@@ -23,8 +19,14 @@ public abstract class PlayerState
 
     private string _animBoolName;
 
-    private Vector3 initialPosition = new Vector3(0.33f, 1.03f, 0);
-    private Vector3 crouchPosition = new Vector3(0.33f, 0.7f, 0);
+    private Vector3 initialPosition = new Vector3(0.33f, 1.03f, 0f);
+    private Vector3 crouchPosition = new Vector3(0.33f, 0.7f, 0f);
+
+    private Vector3 initialShootingPosition = new Vector3(2.04f, 0.62f, 0f);
+    private Vector3 crouchShootingPosition = new Vector3(2.04f, 0.33f, 0f);
+    private Vector3 crouchUpShootingPosition = new Vector3(0, 2f, 0f);
+    private Vector3 upShootingPosition = new Vector3(0f, 2.3f, 0f);
+    private Vector3 downShootingPosition = new Vector3(0f, -1.3f, 0f);
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
     {
@@ -71,6 +73,7 @@ public abstract class PlayerState
     public virtual void AnimationFinishTrigger() => isAnimFinished = true;
     public virtual void Shoot()
     {
+        ShootCheck();
         player.Spawner.Spawn();
         player.AnimTriggers.SwichToShootAnimation();
         if (player.PlayerInput.LookUpInput)
@@ -80,6 +83,29 @@ public abstract class PlayerState
         else if (!player.PlayerInput.LookUpInput)
         {
             player.ShootAnim.Play("ShootAnim", 0, 0.01f);
+        }
+    }
+
+    public void ShootCheck()
+    {
+        if (DownInput)
+        {
+            player.ShootingPoint.localPosition = crouchShootingPosition;
+            if (InAir)
+            {
+                player.ShootingPoint.localPosition = downShootingPosition;
+            }
+            if (LookUpInput)
+            {
+                player.ShootingPoint.localPosition = crouchUpShootingPosition;
+            }
+        }else if (LookUpInput)
+        {
+            player.ShootingPoint.localPosition = upShootingPosition;
+        }
+        else
+        {
+            player.ShootingPoint.localPosition = initialShootingPosition;
         }
     }
 

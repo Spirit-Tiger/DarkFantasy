@@ -28,8 +28,23 @@ public class BulletsSpawner : MonoBehaviour
     {
         bullet.gameObject.SetActive(true);
         bullet.transform.position = transform.position;
-        bullet.transform.localScale = new Vector2( 1 * _player.FaceingDirection, 1);
-        bullet.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.right * _bulletSpeed * _player.FaceingDirection;
+        bullet.transform.localScale = new Vector2(1 * _player.FaceingDirection, 1);
+        if (_player.PlayerInput.LookUpInput)
+        {
+            bullet.transform.localRotation = Quaternion.Euler(0, 0, 90);
+            bullet.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.up * _bulletSpeed;
+        }
+        else if (_player.PlayerInput.CrouchInput && !_player.CheckIfGrounded())
+        {
+            bullet.transform.localRotation = Quaternion.Euler(0, 0, -90);
+            bullet.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.down * _bulletSpeed;
+        }
+        else
+        {
+            bullet.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            bullet.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.right * _bulletSpeed * _player.FaceingDirection;
+        }
+
 
     }
 
@@ -41,13 +56,13 @@ public class BulletsSpawner : MonoBehaviour
 
     private Bullet CreateBullet()
     {
-        return Instantiate(_bulletPrefab); 
+        return Instantiate(_bulletPrefab);
     }
 
     public void Spawn()
     {
-            var bullet = _bulletsPool.Get();
-            bullet.Init(KillAction);
+        var bullet = _bulletsPool.Get();
+        bullet.Init(KillAction);
     }
 
     private void KillAction(Bullet bullet)
