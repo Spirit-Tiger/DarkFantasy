@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     [SerializeField]
     private float _bulletSpeed;
 
-    private WaitForSeconds _deactivateTimer = new (3f);
+    private WaitForSeconds _deactivateTimer = new (0.7f);
 
     public void Init(Action<Bullet> killAction)
     {

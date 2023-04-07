@@ -26,7 +26,7 @@ public abstract class PlayerState
     private Vector3 crouchShootingPosition = new Vector3(2.04f, 0.33f, 0f);
     private Vector3 crouchUpShootingPosition = new Vector3(0, 2f, 0f);
     private Vector3 upShootingPosition = new Vector3(0f, 2.3f, 0f);
-    private Vector3 downShootingPosition = new Vector3(0f, -1.3f, 0f);
+    private Vector3 downShootingPosition = new Vector3(0.6f, -1.45f, 0f);
 
     public PlayerState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName)
     {
@@ -64,7 +64,7 @@ public abstract class PlayerState
             Shoot();
         }
     }
-   
+
     public virtual void DoChecks()
     {
         isGrounded = player.CheckIfGrounded();
@@ -76,12 +76,15 @@ public abstract class PlayerState
         ShootCheck();
         player.Spawner.Spawn();
         player.AnimTriggers.SwichToShootAnimation();
-        if (player.PlayerInput.LookUpInput)
+        if (LookUpInput)
         {
             player.ShootAnim.Play("ShootUp", 0, 0.01f);
         }
-        else if (!player.PlayerInput.LookUpInput)
+        else if (DownInput && InAir)
         {
+            player.ShootAnim.Play("ShootDown", 0, 0.01f);
+        }
+        else {
             player.ShootAnim.Play("ShootAnim", 0, 0.01f);
         }
     }
@@ -99,7 +102,8 @@ public abstract class PlayerState
             {
                 player.ShootingPoint.localPosition = crouchUpShootingPosition;
             }
-        }else if (LookUpInput)
+        }
+        else if (LookUpInput)
         {
             player.ShootingPoint.localPosition = upShootingPosition;
         }

@@ -11,7 +11,7 @@ public class PlayerJumpDownState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
-        player.TopPartAnim.Play("Jump");
+        player.TopPartAnim.Play("LookDown");
         player.BottomPartAnim.Play("Jump");
         player.RB.velocity = new Vector2(player.RB.velocity.x, 0f);
         player.RB.AddForce(Vector2.up * playerData.jumpSpeed, ForceMode2D.Impulse);

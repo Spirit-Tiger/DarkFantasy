@@ -28,7 +28,7 @@ public class BulletsSpawner : MonoBehaviour
     {
         bullet.gameObject.SetActive(true);
         bullet.transform.position = transform.position;
-        bullet.transform.localScale = new Vector2(1 * _player.FaceingDirection, 1);
+
         if (_player.PlayerInput.LookUpInput)
         {
             bullet.transform.localRotation = Quaternion.Euler(0, 0, 90);
@@ -41,11 +41,17 @@ public class BulletsSpawner : MonoBehaviour
         }
         else
         {
-            bullet.transform.localRotation = Quaternion.Euler(0, 0, 0);
-            bullet.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.right * _bulletSpeed * _player.FaceingDirection;
+            if (_player.FaceingDirection > 0)
+            {
+                bullet.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                bullet.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.right * _bulletSpeed;
+            }
+            else
+            {
+                bullet.transform.localRotation = Quaternion.Euler(0, -180, 0);
+                bullet.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.left * _bulletSpeed;
+            }
         }
-
-
     }
 
     private void OnReturnBulletToPool(Bullet bullet)

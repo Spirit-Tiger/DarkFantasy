@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7557b6276dd84d148af2b311968131d8, type: 3}
   m_Name: playerData
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 8
   crouckMoveSpeed: 5
-  jumpSpeed: 40
+  jumpSpeed: 36
   amountOfJumps: 1
   coyoteTime: 0.14
   wallSlideVelocity: 3

@@ -11,7 +11,7 @@ public class PlayerFallingDownState : PlayerAirState
     public override void Enter()
     {
         base.Enter();
-        player.TopPartAnim.Play("Jump");
+        player.TopPartAnim.Play("LookDown");
         player.BottomPartAnim.Play("Jump");
     }
 

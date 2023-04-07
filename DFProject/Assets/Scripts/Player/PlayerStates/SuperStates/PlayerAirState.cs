@@ -44,14 +44,15 @@ public class PlayerAirState : PlayerState
         {
             player.TopPartAnim.Play("LookUp");
         }
-        else if (!LookUpInput)
-        {
-            player.TopPartAnim.Play("Jump");
-        }
         else if (DownInput)
         {
+            player.TopPartAnim.Play("LookDown");
+        }
+        else
+        {
             player.TopPartAnim.Play("Jump");
         }
+        
 
 
         if (isGrounded && player.RB.velocity.y < 0.01f)

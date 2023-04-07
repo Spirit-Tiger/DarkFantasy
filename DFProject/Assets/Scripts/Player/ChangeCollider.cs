@@ -13,7 +13,7 @@ public class ChangeCollider : MonoBehaviour
     private Vector2 initialColliderOffset;
 
     private Vector2 PlayerColliderSize = new Vector2(0.5f,2.398f);
-    private Vector2 PlayerColliderOffset = new Vector2(-0.02f, 0.69f);
+    private Vector2 PlayerColliderOffset = new Vector2(-0.01f, 0.69f);
     private void Start()
     {
         initialColliderSize = playerCollider.size;
