@@ -16,7 +16,7 @@ public class BulletsSpawner : MonoBehaviour
 
     private void Awake()
     {
-        _bulletsPool = new ObjectPool<Bullet>(CreateBullet, OnTakeBulletFromPool, OnReturnBulletToPool, OnDestroyBullet, false, 10, 40);
+        _bulletsPool = new ObjectPool<Bullet>(CreateBullet, OnTakeBulletFromPool, OnReturnBulletToPool, OnDestroyBullet, false, 8, 20);
     }
 
     private void OnDestroyBullet(Bullet bullet)

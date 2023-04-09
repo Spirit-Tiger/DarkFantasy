@@ -23,6 +23,8 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        collision.gameObject.TryGetComponent<IDamagable>(out IDamagable DamageObject);
+        DamageObject?.TakeDamage(1);
         _killAction(this);
     }
 
