@@ -39,15 +39,19 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        _onDie();
+        if (_onDie != null)
+        {
+            _onDie();
+        }
+  
         gameObject.SetActive(false);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            collision.TryGetComponent<IDamagable>(out IDamagable playerInteractions);
+            collision.collider.TryGetComponent<IDamagable>(out IDamagable playerInteractions);
             playerInteractions.TakeDamage(_damage);
         }
     }
