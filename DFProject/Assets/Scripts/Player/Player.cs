@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     public PlayerCrouchIdleUpState CrouchIdleUpState { get; private set; }
     public PlayerCrouchMoveState CrouchMoveState { get; private set; }
     public PlayerCrouchMoveUpState CrouchMoveUpState { get; private set; }
+    public DeathState DeathState { get; private set; }
     private void Awake()
     {
         StateMachine = new PlayerStateMachine();
@@ -84,6 +85,8 @@ public class Player : MonoBehaviour
 
         CrouchMoveState = new PlayerCrouchMoveState(this, StateMachine, playerData, "crouchMove");
         CrouchMoveUpState = new PlayerCrouchMoveUpState(this, StateMachine, playerData, "crouchUpMove");
+
+        DeathState = new DeathState(this, StateMachine, playerData, "death");
     }
 
     private void Start()

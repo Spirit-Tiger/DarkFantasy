@@ -8,6 +8,9 @@ public class Enemy : MonoBehaviour, IDamagable
     [SerializeField]
     private Stats _enemyStats;
 
+    [SerializeField]
+    private EnemyInstance _enemy;
+
     private int _health;
     private int _damage;
 
@@ -31,7 +34,7 @@ public class Enemy : MonoBehaviour, IDamagable
     private void TakeHit(int damageReceived)
     {
         _health -= damageReceived;
-        if(_health <= 0)
+        if (_health <= 0)
         {
             Die();
         }
@@ -39,12 +42,21 @@ public class Enemy : MonoBehaviour, IDamagable
 
     private void Die()
     {
+        
+
         if (_onDie != null)
         {
             _onDie();
         }
-  
-        gameObject.SetActive(false);
+        if (_enemy != null)
+        {
+            _enemy.StateMachine.ChangeState(_enemy.DeathState);
+        }
+        else
+        {
+            gameObject.SetActive(false);
+        }
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
