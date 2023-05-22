@@ -26,7 +26,7 @@ public class EnemyIdleState : EnemyState
     {
         base.LogicUpdate();
 
-        if(Time.time - 2f > _waitTime)
+        if(Time.time - 1f > _waitTime)
         {
             stateMachine.ChangeState(enemy.WalkState);
         }

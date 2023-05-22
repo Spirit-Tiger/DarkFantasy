@@ -14,6 +14,7 @@ public class EnemyInstance : MonoBehaviour
 
     private float _rayDirection;
     private int _moveDirection;
+    private bool _shouldAttack = false;
 
     public EnemyStateMachine StateMachine { get; private set; }
     public EnemyIdleState IdleState { get; private set; }
@@ -56,8 +57,8 @@ public class EnemyInstance : MonoBehaviour
 
         RayCastDirection();
 
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 8f * _rayDirection, PlayerLayer);
-        Debug.DrawRay(transform.position, Vector2.left * 8f * _rayDirection, Color.red);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.left, 10f * _rayDirection, PlayerLayer);
+        Debug.DrawRay(transform.position, Vector2.left * 10f * _rayDirection, Color.red);
         if (hit.collider != null)
         {
             if (hit.collider.CompareTag("Player"))
@@ -108,6 +109,19 @@ public class EnemyInstance : MonoBehaviour
                 transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
             }
         }
+    }
+
+    public bool ShouldAttack()
+    {
+        if (Vector3.Distance(transform.position, player.transform.position) <= 2.5f)
+        {
+            _shouldAttack = true;
+        }
+        else
+        {
+            _shouldAttack = false;
+        }
+        return _shouldAttack;
     }
 
     public int MoveDirection()
