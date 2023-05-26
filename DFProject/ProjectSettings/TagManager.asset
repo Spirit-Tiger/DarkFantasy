@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Death
   - Health
+  - PlusMaxHealth
+  - Devil
+  - Restart
   layers:
   - Default
   - TransparentFX

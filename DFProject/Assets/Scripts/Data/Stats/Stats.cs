@@ -8,4 +8,9 @@ public class Stats : ScriptableObject
     public int MaxHealth;
     public int Health;
     public int Damage;
+
+    public void ChangeMaxHealth()
+    {
+        MaxHealth += 1;
+    }
 }

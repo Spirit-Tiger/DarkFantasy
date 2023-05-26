@@ -8,12 +8,13 @@ public class HPFunctions : MonoBehaviour
     private Vector2 initPos = new Vector2(114f, -0.2f);
     public GameObject Heart;
     public GameObject EmptyHeart;
-    public Stats Stats;
+    public ExtendedStats Stats;
     private List<GameObject> hpList = new List<GameObject>();
 
     private void OnEnable()
     {
         PlayerInteraction.OnHPChange += Place;
+        ButtonsActions.OnChangeHp += Place;
     }
     private void Start()
     {
@@ -46,6 +47,7 @@ public class HPFunctions : MonoBehaviour
     private void OnDisable()
     {
 
+        ButtonsActions.OnChangeHp -= Place;
         PlayerInteraction.OnHPChange -= Place;
 
     }

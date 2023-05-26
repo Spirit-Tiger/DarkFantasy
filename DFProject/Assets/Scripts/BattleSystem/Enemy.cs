@@ -15,6 +15,8 @@ public class Enemy : MonoBehaviour, IDamagable
     private int _damage;
 
     private event Action _onDie;
+
+    private event Action _onRestart;
     private void Start()
     {
         _health = _enemyStats.Health;
@@ -24,6 +26,11 @@ public class Enemy : MonoBehaviour, IDamagable
     public void Init(Action spawnedDie)
     {
         _onDie = spawnedDie;
+    }
+
+    public void Rest(Action spawnedRestart)
+    {
+        _onRestart = spawnedRestart;
     }
 
     public void TakeDamage(int damageReceived)
@@ -64,7 +71,19 @@ public class Enemy : MonoBehaviour, IDamagable
         if (collision.gameObject.CompareTag("Player"))
         {
             collision.collider.TryGetComponent<IDamagable>(out IDamagable playerInteractions);
-            playerInteractions.TakeDamage(_damage);
+            if(playerInteractions != null)
+            {
+                playerInteractions.TakeDamage(_damage);
+            }
+     
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Restart"))
+        {
+            _onRestart();
         }
     }
 }

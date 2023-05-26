@@ -217,7 +217,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   enemyData: {fileID: 11400000, guid: e7b64d040ff19a646b574fe47510d171, type: 2}
-  player: {fileID: 0}
+  player: {fileID: 4032734031859995349, guid: 0a244f7246ebb664bbc1829c1b31edcd, type: 3}
 --- !u!114 &2459024576503789951
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,6 +30,7 @@ public class DoorController : MonoBehaviour
         foreach(EnemySpawner spawner in _spawnerList)
         {
             spawner.OnEnemyKilled += EnemyDied;
+            spawner.OnReset += ResetCount;
         }
     }
     
@@ -44,6 +45,7 @@ public class DoorController : MonoBehaviour
         foreach (EnemySpawner spawner in _spawnerList)
         {
             spawner.OnEnemyKilled -= EnemyDied;
+            spawner.OnReset -= ResetCount;
         }
     }
     private void FormGoalForOpening()
@@ -61,5 +63,16 @@ public class DoorController : MonoBehaviour
         {
             _door.Open();
         }
+    }
+
+    private void ResetCount()
+    {
+        _spawnerList[0].PlayerInteractions.TakeDamage(10);
+
+        foreach (EnemySpawner spawner in _spawnerList)
+        {
+            spawner.Restart();
+        }
+        _enemyDiedCount = 0;
     }
 }

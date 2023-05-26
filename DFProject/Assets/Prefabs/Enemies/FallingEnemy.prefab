@@ -175,4 +175,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c255412f3ecd99e4dbb81aac2b471ddd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyStats: {fileID: 11400000, guid: 1a186646c59e62542907ed1ce269326d, type: 2}
+  _enemyStats: {fileID: 11400000, guid: b2a298cefa63dc14a9a45658aaed687a, type: 2}
+  _enemy: {fileID: 0}

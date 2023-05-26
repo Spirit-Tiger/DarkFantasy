@@ -32,7 +32,7 @@ public class EnemyInstance : MonoBehaviour
         RB = GetComponent<Rigidbody2D>();
         Anim = GetComponent<Animator>();
         BoxCollider = GetComponent<BoxCollider2D>();
-
+        player = FindObjectOfType<Player>().GetComponent<Transform>();
         StateMachine = new EnemyStateMachine();
         IdleState = new EnemyIdleState(this, StateMachine, enemyData, "idle");
         AttackState = new EnemyAttackState(this, StateMachine, enemyData, "attack");
@@ -113,7 +113,7 @@ public class EnemyInstance : MonoBehaviour
 
     public bool ShouldAttack()
     {
-        if (Vector3.Distance(transform.position, player.transform.position) <= 2.5f)
+        if (Vector3.Distance(transform.position, player.position) <= 2.4f)
         {
             _shouldAttack = true;
         }
